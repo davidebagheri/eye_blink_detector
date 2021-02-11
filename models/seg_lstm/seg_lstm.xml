@@ -1,0 +1,762 @@
+<?xml version="1.0" ?>
+<net name="seg_lstm" version="10">
+	<layers>
+		<layer id="0" name="input" type="Parameter" version="opset1">
+			<data element_type="f16" shape="2,10,1"/>
+			<output>
+				<port id="0" precision="FP16">
+					<dim>2</dim>
+					<dim>10</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="1" name="lstm/transpose/Cast_11298_const" type="Const" version="opset1">
+			<data element_type="i64" offset="0" shape="3" size="24"/>
+			<output>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="2" name="lstm/transpose" type="Transpose" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>10</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>10</dim>
+					<dim>2</dim>
+					<dim>1</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="3" name="lstm/while/Enter_4/Output_0/Data__const" type="Const" version="opset1">
+			<data element_type="f16" offset="24" shape="2,64" size="256"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>64</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="4" name="lstm/while/Enter_3/Output_0/Data__const" type="Const" version="opset1">
+			<data element_type="f16" offset="24" shape="2,64" size="256"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>64</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="5" name="lstm/while/Enter_6/Output_0/Data__const" type="Const" version="opset1">
+			<data element_type="f16" offset="280" shape="2,128" size="512"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="6" name="lstm/while/Enter_5/Output_0/Data__const" type="Const" version="opset1">
+			<data element_type="f16" offset="280" shape="2,128" size="512"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="7" name="lstm/while/LoopCond/TensorIteratorCondition_/TensorIterator" type="TensorIterator" version="opset1">
+			<input>
+				<port id="0">
+					<dim>10</dim>
+					<dim>2</dim>
+					<dim>1</dim>
+				</port>
+				<port id="1">
+					<dim>2</dim>
+					<dim>64</dim>
+				</port>
+				<port id="2">
+					<dim>2</dim>
+					<dim>64</dim>
+				</port>
+				<port id="3">
+					<dim>2</dim>
+					<dim>128</dim>
+				</port>
+				<port id="4">
+					<dim>2</dim>
+					<dim>128</dim>
+				</port>
+			</input>
+			<output>
+				<port id="5" precision="FP16">
+					<dim>10</dim>
+					<dim>2</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+			<port_map>
+				<input axis="0" external_port_id="0" internal_layer_id="0"/>
+				<input external_port_id="4" internal_layer_id="12"/>
+				<input external_port_id="2" internal_layer_id="4"/>
+				<input external_port_id="1" internal_layer_id="3"/>
+				<input external_port_id="3" internal_layer_id="11"/>
+				<output axis="0" external_port_id="5" internal_layer_id="21"/>
+			</port_map>
+			<back_edges>
+				<edge from-layer="17" to-layer="12"/>
+				<edge from-layer="9" to-layer="4"/>
+				<edge from-layer="10" to-layer="3"/>
+				<edge from-layer="18" to-layer="11"/>
+			</back_edges>
+			<body>
+				<layers>
+					<layer id="0" name="53" type="Parameter" version="opset1">
+						<data element_type="f16" shape="1,2,1"/>
+						<output>
+							<port id="0" precision="FP16">
+								<dim>1</dim>
+								<dim>2</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="1" name="46_const" type="Const" version="opset1">
+						<data element_type="i64" offset="83916" shape="1" size="8"/>
+						<output>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="2" name="lstm/while/TensorArrayReadV3/Output_0/Data_/InputSqueeze" type="Squeeze" version="opset1">
+						<input>
+							<port id="0">
+								<dim>1</dim>
+								<dim>2</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP16">
+								<dim>2</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="3" name="55" type="Parameter" version="opset1">
+						<data element_type="f16" shape="2,64"/>
+						<output>
+							<port id="0" precision="FP16">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="4" name="57" type="Parameter" version="opset1">
+						<data element_type="f16" shape="2,64"/>
+						<output>
+							<port id="0" precision="FP16">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="5" name="lstm/while/lstm/multi_rnn_cell/cell_0/lstm_cell/concat/LSTMCell/Split420_const" type="Const" version="opset1">
+						<data element_type="f16" offset="83924" shape="256,1" size="512"/>
+						<output>
+							<port id="1" precision="FP16">
+								<dim>256</dim>
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="6" name="lstm/while/lstm/multi_rnn_cell/cell_0/lstm_cell/concat/LSTMCell/Split421_const" type="Const" version="opset1">
+						<data element_type="f16" offset="84436" shape="256,64" size="32768"/>
+						<output>
+							<port id="1" precision="FP16">
+								<dim>256</dim>
+								<dim>64</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="7" name="lstm/while/lstm/multi_rnn_cell/cell_0/lstm_cell/BiasAdd/Enter/Output_0/Data__const" type="Const" version="opset1">
+						<data element_type="f16" offset="117204" shape="256" size="512"/>
+						<output>
+							<port id="1" precision="FP16">
+								<dim>256</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="8" name="lstm/while/lstm/multi_rnn_cell/cell_0/lstm_cell/concat/LSTMCell" type="LSTMCell" version="opset1">
+						<data hidden_size="64"/>
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>1</dim>
+							</port>
+							<port id="1">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+							<port id="2">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+							<port id="3">
+								<dim>256</dim>
+								<dim>1</dim>
+							</port>
+							<port id="4">
+								<dim>256</dim>
+								<dim>64</dim>
+							</port>
+							<port id="5">
+								<dim>256</dim>
+							</port>
+						</input>
+						<output>
+							<port id="6" precision="FP16">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+							<port id="7" precision="FP16">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="9" name="lstm/while/lstm/multi_rnn_cell/cell_0/lstm_cell/concat/LSTMCell/Output_1/Data_/sink_port_0" type="Result" version="opset1">
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="10" name="lstm/while/lstm/multi_rnn_cell/cell_0/lstm_cell/concat/LSTMCell/Output_0/Data_/sink_port_0" type="Result" version="opset1">
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="11" name="59" type="Parameter" version="opset1">
+						<data element_type="f16" shape="2,128"/>
+						<output>
+							<port id="0" precision="FP16">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="12" name="61" type="Parameter" version="opset1">
+						<data element_type="f16" shape="2,128"/>
+						<output>
+							<port id="0" precision="FP16">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="13" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/concat/LSTMCell/Split431_const" type="Const" version="opset1">
+						<data element_type="f16" offset="117716" shape="512,64" size="65536"/>
+						<output>
+							<port id="1" precision="FP16">
+								<dim>512</dim>
+								<dim>64</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="14" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/concat/LSTMCell/Split432_const" type="Const" version="opset1">
+						<data element_type="f16" offset="183252" shape="512,128" size="131072"/>
+						<output>
+							<port id="1" precision="FP16">
+								<dim>512</dim>
+								<dim>128</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="15" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/BiasAdd/Enter/Output_0/Data__const" type="Const" version="opset1">
+						<data element_type="f16" offset="314324" shape="512" size="1024"/>
+						<output>
+							<port id="1" precision="FP16">
+								<dim>512</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="16" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/concat/LSTMCell" type="LSTMCell" version="opset1">
+						<data hidden_size="128"/>
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>64</dim>
+							</port>
+							<port id="1">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+							<port id="2">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+							<port id="3">
+								<dim>512</dim>
+								<dim>64</dim>
+							</port>
+							<port id="4">
+								<dim>512</dim>
+								<dim>128</dim>
+							</port>
+							<port id="5">
+								<dim>512</dim>
+							</port>
+						</input>
+						<output>
+							<port id="6" precision="FP16">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+							<port id="7" precision="FP16">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="17" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/concat/LSTMCell/Output_1/Data_/sink_port_0" type="Result" version="opset1">
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="18" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/concat/LSTMCell/Output_0/Data_/sink_port_0" type="Result" version="opset1">
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</input>
+					</layer>
+					<layer id="19" name="49_const" type="Const" version="opset1">
+						<data element_type="i64" offset="83916" shape="1" size="8"/>
+						<output>
+							<port id="1" precision="I64">
+								<dim>1</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="20" name="lstm/while/lstm/multi_rnn_cell/cell_1/lstm_cell/concat/LSTMCell/Output_0/Data_/OutputUnsqueeze" type="Unsqueeze" version="opset1">
+						<input>
+							<port id="0">
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+							<port id="1">
+								<dim>1</dim>
+							</port>
+						</input>
+						<output>
+							<port id="2" precision="FP16">
+								<dim>1</dim>
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</output>
+					</layer>
+					<layer id="21" name="51/sink_port_0" type="Result" version="opset1">
+						<input>
+							<port id="0">
+								<dim>1</dim>
+								<dim>2</dim>
+								<dim>128</dim>
+							</port>
+						</input>
+					</layer>
+				</layers>
+				<edges>
+					<edge from-layer="0" from-port="0" to-layer="2" to-port="0"/>
+					<edge from-layer="1" from-port="1" to-layer="2" to-port="1"/>
+					<edge from-layer="2" from-port="2" to-layer="8" to-port="0"/>
+					<edge from-layer="3" from-port="0" to-layer="8" to-port="1"/>
+					<edge from-layer="4" from-port="0" to-layer="8" to-port="2"/>
+					<edge from-layer="5" from-port="1" to-layer="8" to-port="3"/>
+					<edge from-layer="6" from-port="1" to-layer="8" to-port="4"/>
+					<edge from-layer="7" from-port="1" to-layer="8" to-port="5"/>
+					<edge from-layer="8" from-port="7" to-layer="9" to-port="0"/>
+					<edge from-layer="8" from-port="6" to-layer="10" to-port="0"/>
+					<edge from-layer="8" from-port="6" to-layer="16" to-port="0"/>
+					<edge from-layer="11" from-port="0" to-layer="16" to-port="1"/>
+					<edge from-layer="12" from-port="0" to-layer="16" to-port="2"/>
+					<edge from-layer="13" from-port="1" to-layer="16" to-port="3"/>
+					<edge from-layer="14" from-port="1" to-layer="16" to-port="4"/>
+					<edge from-layer="15" from-port="1" to-layer="16" to-port="5"/>
+					<edge from-layer="16" from-port="7" to-layer="17" to-port="0"/>
+					<edge from-layer="16" from-port="6" to-layer="18" to-port="0"/>
+					<edge from-layer="16" from-port="6" to-layer="20" to-port="0"/>
+					<edge from-layer="19" from-port="1" to-layer="20" to-port="1"/>
+					<edge from-layer="20" from-port="2" to-layer="21" to-port="0"/>
+				</edges>
+			</body>
+		</layer>
+		<layer id="8" name="lstm/transpose_1/Cast_11300_const" type="Const" version="opset1">
+			<data element_type="i64" offset="0" shape="3" size="24"/>
+			<output>
+				<port id="1" precision="I64">
+					<dim>3</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="9" name="lstm/transpose_1" type="Transpose" version="opset1">
+			<input>
+				<port id="0">
+					<dim>10</dim>
+					<dim>2</dim>
+					<dim>128</dim>
+				</port>
+				<port id="1">
+					<dim>3</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>10</dim>
+					<dim>128</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="10" name="unfolded/unfolded/Cast_11296_const" type="Const" version="opset1">
+			<data element_type="i64" offset="792" shape="2" size="16"/>
+			<output>
+				<port id="1" precision="I64">
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="11" name="unfolded/unfolded" type="Reshape" version="opset1">
+			<data special_zero="False"/>
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>10</dim>
+					<dim>128</dim>
+				</port>
+				<port id="1">
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>1280</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="12" name="fc0/MatMul/1_port_transpose1077_const" type="Const" version="opset1">
+			<data element_type="f16" offset="808" shape="32,1280" size="81920"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>32</dim>
+					<dim>1280</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="13" name="fc0/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="False" transpose_b="True"/>
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>1280</dim>
+				</port>
+				<port id="1">
+					<dim>32</dim>
+					<dim>1280</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="14" name="fc0/biases/read/Output_0/Data_/copy_const" type="Const" version="opset1">
+			<data element_type="f16" offset="82728" shape="1,32" size="64"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="15" name="fc0/BiasAdd/Add" type="Add" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>32</dim>
+				</port>
+				<port id="1">
+					<dim>1</dim>
+					<dim>32</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="16" name="fc0/Relu" type="ReLU" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>32</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="17" name="fc1/MatMul/1_port_transpose1081_const" type="Const" version="opset1">
+			<data element_type="f16" offset="82792" shape="16,32" size="1024"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>16</dim>
+					<dim>32</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="18" name="fc1/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="False" transpose_b="True"/>
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>32</dim>
+				</port>
+				<port id="1">
+					<dim>16</dim>
+					<dim>32</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="19" name="fc1/biases/read/Output_0/Data_/copy_const" type="Const" version="opset1">
+			<data element_type="f16" offset="83816" shape="1,16" size="32"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>16</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="20" name="fc1/BiasAdd/Add" type="Add" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+				<port id="1">
+					<dim>1</dim>
+					<dim>16</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="21" name="fc1/Relu" type="ReLU" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="22" name="fc2/MatMul/1_port_transpose1085_const" type="Const" version="opset1">
+			<data element_type="f16" offset="83848" shape="2,16" size="64"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="23" name="fc2/MatMul" type="MatMul" version="opset1">
+			<data transpose_a="False" transpose_b="True"/>
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+				<port id="1">
+					<dim>2</dim>
+					<dim>16</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="24" name="fc2/biases/read/Output_0/Data_/copy_const" type="Const" version="opset1">
+			<data element_type="f16" offset="83912" shape="1,2" size="4"/>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>1</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="25" name="fc2/BiasAdd/Add" type="Add" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>2</dim>
+				</port>
+				<port id="1">
+					<dim>1</dim>
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="2" precision="FP16">
+					<dim>2</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="26" name="prediction" type="SoftMax" version="opset1">
+			<data axis="1"/>
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>2</dim>
+				</port>
+			</input>
+			<output>
+				<port id="1" precision="FP16">
+					<dim>2</dim>
+					<dim>2</dim>
+				</port>
+			</output>
+		</layer>
+		<layer id="27" name="prediction/sink_port_0" type="Result" version="opset1">
+			<input>
+				<port id="0">
+					<dim>2</dim>
+					<dim>2</dim>
+				</port>
+			</input>
+		</layer>
+	</layers>
+	<edges>
+		<edge from-layer="0" from-port="0" to-layer="2" to-port="0"/>
+		<edge from-layer="1" from-port="1" to-layer="2" to-port="1"/>
+		<edge from-layer="2" from-port="2" to-layer="7" to-port="0"/>
+		<edge from-layer="3" from-port="1" to-layer="7" to-port="1"/>
+		<edge from-layer="4" from-port="1" to-layer="7" to-port="2"/>
+		<edge from-layer="5" from-port="1" to-layer="7" to-port="3"/>
+		<edge from-layer="6" from-port="1" to-layer="7" to-port="4"/>
+		<edge from-layer="7" from-port="5" to-layer="9" to-port="0"/>
+		<edge from-layer="8" from-port="1" to-layer="9" to-port="1"/>
+		<edge from-layer="9" from-port="2" to-layer="11" to-port="0"/>
+		<edge from-layer="10" from-port="1" to-layer="11" to-port="1"/>
+		<edge from-layer="11" from-port="2" to-layer="13" to-port="0"/>
+		<edge from-layer="12" from-port="1" to-layer="13" to-port="1"/>
+		<edge from-layer="13" from-port="2" to-layer="15" to-port="0"/>
+		<edge from-layer="14" from-port="1" to-layer="15" to-port="1"/>
+		<edge from-layer="15" from-port="2" to-layer="16" to-port="0"/>
+		<edge from-layer="16" from-port="1" to-layer="18" to-port="0"/>
+		<edge from-layer="17" from-port="1" to-layer="18" to-port="1"/>
+		<edge from-layer="18" from-port="2" to-layer="20" to-port="0"/>
+		<edge from-layer="19" from-port="1" to-layer="20" to-port="1"/>
+		<edge from-layer="20" from-port="2" to-layer="21" to-port="0"/>
+		<edge from-layer="21" from-port="1" to-layer="23" to-port="0"/>
+		<edge from-layer="22" from-port="1" to-layer="23" to-port="1"/>
+		<edge from-layer="23" from-port="2" to-layer="25" to-port="0"/>
+		<edge from-layer="24" from-port="1" to-layer="25" to-port="1"/>
+		<edge from-layer="25" from-port="2" to-layer="26" to-port="0"/>
+		<edge from-layer="26" from-port="1" to-layer="27" to-port="0"/>
+	</edges>
+	<meta_data>
+		<MO_version value="2020.1.0-61-gd349c3ba4a"/>
+		<cli_parameters>
+			<blobs_as_inputs value="True"/>
+			<caffe_parser_path value="DIR"/>
+			<data_type value="FP16"/>
+			<disable_nhwc_to_nchw value="False"/>
+			<disable_omitting_optional value="False"/>
+			<disable_resnet_optimization value="False"/>
+			<enable_concat_optimization value="False"/>
+			<enable_flattening_nested_params value="False"/>
+			<enable_ssd_gluoncv value="False"/>
+			<extensions value="DIR"/>
+			<framework value="tf"/>
+			<freeze_placeholder_with_value value="{}"/>
+			<generate_deprecated_IR_V2 value="False"/>
+			<generate_deprecated_IR_V7 value="False"/>
+			<generate_experimental_IR_V10 value="True"/>
+			<input value="input"/>
+			<input_model value="DIR/seg_lstm.pb"/>
+			<input_model_is_text value="False"/>
+			<input_shape value="[2,10,1]"/>
+			<k value="DIR/CustomLayersMapping.xml"/>
+			<keep_quantize_ops_in_IR value="True"/>
+			<keep_shape_ops value="False"/>
+			<legacy_mxnet_model value="False"/>
+			<log_level value="ERROR"/>
+			<mean_scale_values value="{}"/>
+			<mean_values value="()"/>
+			<model_name value="seg_lstm"/>
+			<move_to_preprocess value="False"/>
+			<output_dir value="DIR"/>
+			<placeholder_data_types value="{}"/>
+			<placeholder_shapes value="{'input': array([ 2, 10,  1])}"/>
+			<progress value="True"/>
+			<remove_memory value="False"/>
+			<remove_output_softmax value="False"/>
+			<reverse_input_channels value="False"/>
+			<save_params_from_nd value="False"/>
+			<scale_values value="()"/>
+			<silent value="False"/>
+			<stream_output value="True"/>
+			<unset unset_cli_parameters="batch, counts, disable_fusing, disable_gfusing, finegrain_fusing, input_checkpoint, input_meta_graph, input_proto, input_symbol, mean_file, mean_file_offsets, nd_prefix_name, output, pretrained_model_name, saved_model_dir, saved_model_tags, scale, tensorboard_logdir, tensorflow_custom_layer_libraries, tensorflow_custom_operations_config_update, tensorflow_object_detection_api_pipeline_config, tensorflow_operation_patterns, tensorflow_subgraph_patterns, tensorflow_use_custom_operations_config, transformations_config"/>
+		</cli_parameters>
+	</meta_data>
+</net>

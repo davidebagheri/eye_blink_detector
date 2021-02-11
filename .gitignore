@@ -1,0 +1,10 @@
+build
+cmake-*
+libfacedetection
+yaml-cpp
+Relazione*
+dnn_prova.cpp
+get_eyes_camera.cpp
+get_eyes_image.cpp
+get_eyes_video.cpp
+intermediate_presentation.odp

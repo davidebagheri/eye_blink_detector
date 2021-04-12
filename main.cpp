@@ -1,6 +1,7 @@
 #include "eye_blink_detector/eye_blink_detector.h"
 #include "yaml-cpp/yaml.h"
 #include "eye_blink_detector/utils.h"
+#include <chrono>
 
 int main(int argc, char** argv) {
     if(argc != 2)
@@ -29,11 +30,28 @@ int main(int argc, char** argv) {
         cv::Mat frame;
 
         while (1){
+            auto t1 = std::chrono::high_resolution_clock::now();
+
             cap.read(frame);
+
+
+            auto t2 = std::chrono::high_resolution_clock::now();
 
             eye_blink_detector.detect(frame);
 
+            auto t3 = std::chrono::high_resolution_clock::now();
+
             eye_blink_detector.visualizeResults(&frame);
+
+            auto t4 = std::chrono::high_resolution_clock::now();
+
+            std::chrono::duration<double, std::milli> cap_read = t2 - t1;
+            std::chrono::duration<double, std::milli> eb_det = t3 - t2;
+            std::chrono::duration<double, std::milli> vis_res = t4 - t3;
+            std::chrono::duration<double, std::milli> tot = t4 - t1;
+
+            std::cout << "cap_read " << cap_read.count() << " eb_det: " << eb_det.count() <<
+            " vis_res: " << vis_res.count() << " tot: " << tot.count() << std::endl;
 
             cv::imshow("result", frame);
 

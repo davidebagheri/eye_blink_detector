@@ -59,26 +59,3 @@ target_link_libraries(main
 		${PROJECT_NAME}
 		${yaml_LIBS}
 		)
-
-# Crop eyes from images in a folder
-#add_executable(get_eyes_image get_eyes_image.cpp)
-#target_link_libraries(get_eyes_image
-#		${PROJECT_NAME}
-#		)
-
-# Crop eyes from camera video
-#add_executable(get_eyes_camera get_eyes_camera.cpp)
-#target_link_libraries(get_eyes_camera
-#		${PROJECT_NAME}
-#		)
-
-# Crop eyes from video file
-#add_executable(get_eyes_video get_eyes_video.cpp)
-#target_link_libraries(get_eyes_video
-#		${PROJECT_NAME}
-#		)
-
-#add_executable(dnn_prova dnn_prova.cpp)
-#target_link_libraries(dnn_prova
-#		${OpenCV_LIBS}
-#		)

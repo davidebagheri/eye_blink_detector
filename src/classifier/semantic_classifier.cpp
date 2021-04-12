@@ -19,9 +19,6 @@ namespace eb_detector{
             if (seq_blob_.at<float>(batch_n, 0, reference_class_) > seg_threshold_) return false;
 
             for (int time_step = 1; time_step < sequence_len_; time_step++){
-                /*if (seq_blob_.at<float>(batch_n, time_step, reference_class_) >= seg_threshold_){
-                    std::cout << "*";
-                } else std::cout << "_";*/
                 if (!started){
                     // first sample of the peak met
                     if (seq_blob_.at<float>(batch_n, time_step, reference_class_) >= seg_threshold_){

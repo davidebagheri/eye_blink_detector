@@ -5,11 +5,14 @@ project(eye_blink_detector)
 find_package( OpenCV REQUIRED )
 find_package( facedetection REQUIRED )
 find_package(ngraph REQUIRED)
-find_package(yaml-cpp REQUIRED HINTS /home/davide/Desktop/eye_blink_detector/yaml-cpp)
 
 # Set libfacedetection paths
 set(facedetection_INCLUDE_DIRS "/usr/local/include/facedetection")
 set(facedetection_LIBS "facedetection")
+
+# Set yaml-cpp paths
+set(yaml_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/yaml-cpp/include")
+set(yaml_LIBS "${CMAKE_SOURCE_DIR}/yaml-cpp/build/libyaml-cpp.so")
 
 # C++ standard
 set(CMAKE_CXX_STANDARD 11)
@@ -19,7 +22,7 @@ include_directories(
 		${facedetection_INCLUDE_DIRS}
 		${OpenCV_INCLUDE_DIRS}
         ${NGraph_INCLUDE_DIRS}
-		${YAML_CPP_INCLUDE_DIR}
+		${yaml_INCLUDE_DIRS}
 		include
 )
 
@@ -47,13 +50,14 @@ add_library(${PROJECT_NAME} SHARED
 target_link_libraries(${PROJECT_NAME}
 		${OpenCV_LIBS}
 		${facedetection_LIBS}
-		${YAML_CPP_LIBRARIES}
+		${yaml_LIBS}
 		)
 
 # Eye Blink detection from a streaming camera
 add_executable(main main.cpp)
 target_link_libraries(main
 		${PROJECT_NAME}
+		${yaml_LIBS}
 		)
 
 # Crop eyes from images in a folder

@@ -6,7 +6,7 @@ namespace eb_detector{
         getParam(params, "xml_path", xml_path_, std::string("../models/seg_lstm/seg_lstm.xml"));
         getParam(params, "bin_path", bin_path_, std::string("../models/seg_lstm/seg_lstm.bin"));
         getParam<int>(params, "dnn_backend", dnn_backend_, cv::dnn::DNN_BACKEND_INFERENCE_ENGINE);
-        getParam<float>(params, "confidence_threshold", confidence_th_, 95.0);
+        getParam<float>(params, "confidence_threshold", confidence_th_, 0.95);
         getParam(params, "blink_class_id", blink_class_id_, 0);
 
         // Load model
@@ -33,8 +33,7 @@ namespace eb_detector{
             }
 
             // Apply threshold
-            result = min_conf > confidence_th_ ;
-
+            result = min_conf >= confidence_th_ ;
             // Clear input sequence to avoid multiple detections of very similar windows
             if (result) reset();
         }

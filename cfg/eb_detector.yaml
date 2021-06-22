@@ -1,5 +1,8 @@
+video_capture: 0
+
 face_detector:
   verbose: false
+  pyr_down: 2   # Must be a power of 2
   face_selector:
     type: biggest_face
     confidence_threshold: 95
@@ -10,10 +13,12 @@ blink_classifier:
     x_crop_ratio: 0.8
     y_crop_ratio: 0.4
     use_manhattan_distance: true
+    min_cropped_img_width: 26
+    min_cropped_img_height: 13
   feature_extractor:
     type: segmentation_extractor
-    xml_path: "../models/eye_unet/eye_unet.xml"
-    bin_path: "../models/eye_unet/eye_unet.bin"
+    xml_path: "../models/eye_unet/FP32/eye_unet_32.xml"
+    bin_path: "../models/eye_unet/FP32/eye_unet_32.bin"
     input_width: 80
     input_height: 40
     input_scale_factor: 0.00392156862745098    # it is 1/255
@@ -21,14 +26,11 @@ blink_classifier:
     class_to_return: 2  # 0=pupil, 1=white, 2=background
     visualize: true
   sequence_classifier:
-    type: semantic_classifier
-    xml_path: "../models/seg_lstm/seg_lstm.xml"
-    bin_path: "../models/seg_lstm/seg_lstm.bin"
+    type: nn_classifier
+    xml_path: "../models/seg_lstm/FP32/seg_lstm.xml"
+    bin_path: "../models/seg_lstm/FP32/seg_lstm.bin"
     confidence_threshold: 95
     batch_size: 2
     sequence_length: 10
     img_feature_length: 1
-    blink_class_id: 1
-    seg_threshold: 0.99
-    reference_class: 0
 

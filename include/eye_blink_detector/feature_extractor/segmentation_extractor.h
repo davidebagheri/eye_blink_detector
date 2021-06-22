@@ -10,6 +10,8 @@ namespace eb_detector {
 
         virtual cv::Mat forward(const std::vector<cv::Mat>& model_in) override;
 
+        virtual void visualizeResults(cv::Mat* image) override;
+
         cv::Mat computeArgmax(const cv::Mat& model_output);
 
         std::vector<float> computeClassesAreas(const cv::Mat& prediction);
@@ -24,7 +26,7 @@ namespace eb_detector {
         std::vector<cv::Vec3b> colors_;
 
         // Variables
-        std::vector<cv::Mat> segmented_maps_;
+        std::vector<cv::Mat> predictions_;
     };
 }
 

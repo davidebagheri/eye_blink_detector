@@ -10,6 +10,8 @@ namespace eb_detector {
 
         virtual cv::Mat forward(const std::vector<cv::Mat>& model_in) override;
 
+        virtual void visualizeResults(cv::Mat* image) override {};
+
     protected:
         // Model paths
         std::string xml_path_;

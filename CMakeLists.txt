@@ -44,8 +44,7 @@ add_library(${PROJECT_NAME} SHARED
 		# Classifiers
 		src/classifier/sequence_classifier.cpp
 		src/classifier/nn_classifier.cpp
-		src/classifier/semantic_classifier.cpp
-)
+		)
 
 target_link_libraries(${PROJECT_NAME}
 		${OpenCV_LIBS}

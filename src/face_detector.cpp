@@ -12,6 +12,7 @@ namespace eb_detector{
 
         // Get params
         getParam(params["face_selector"], "type", face_selector_type_, std::string("biggest_face"));
+        getParam(params, "pyr_down", pyr_down_, 1);
         getParam(params, "verbose", verbose_, false);
 
         // Init face selector
@@ -23,11 +24,21 @@ namespace eb_detector{
     }
 
     void FaceDetector::detectFaces(const cv::Mat& image) {
+        // Reduce dimensions with pyr down
+        cv::Mat input_image;
+
+        if (pyr_down_ > 1){
+            cv::pyrDown(image, input_image, cv::Size(image.cols/pyr_down_, image.rows/pyr_down_));
+        } else {
+            input_image = image;
+        }
+
         // Detect
         cv::TickMeter cvtm;
         cvtm.start();
-        int * pResults = facedetect_cnn(pBuffer_, (unsigned char *) (image.ptr(0)),
-                image.cols, image.rows, (int) image.step);
+
+        int * pResults = facedetect_cnn(pBuffer_, (unsigned char *) (input_image.ptr(0)),
+                                        input_image.cols, input_image.rows, (int) input_image.step);
         cvtm.stop();
 
         // Convert result in an organized form
@@ -50,9 +61,9 @@ namespace eb_detector{
             Face detected_face;
 
             detected_face.confidence = p[0];
-            detected_face.bounding_box = cv::Rect(p[1], p[2], p[3], p[4]);
-            detected_face.eyes[0] = cv::Point(p[5], p[5 + 1]);
-            detected_face.eyes[1] = cv::Point(p[5 + 2], p[5 + 3]);
+            detected_face.bounding_box = cv::Rect(p[1]* pyr_down_, p[2] * pyr_down_, p[3] * pyr_down_, p[4] * pyr_down_);
+            detected_face.eyes[0] = cv::Point(p[5], p[5 + 1]) * pyr_down_;
+            detected_face.eyes[1] = cv::Point(p[5 + 2], p[5 + 3]) * pyr_down_;
 
             detected_faces_.push_back(detected_face);
         }

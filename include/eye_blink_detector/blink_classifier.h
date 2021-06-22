@@ -24,18 +24,13 @@ namespace eb_detector {
         //void visualizePlot(cv::Mat* image);
 
     private:
-        //void storePrediction();
-
         // Params
         std::string eyes_cropper_type_;
         std::string sequence_classifier_type_;
         std::string feature_extractor_type_;
 
         // Variables
-        std::vector<float> blink_conf_; // Current detection blink confidence
         int n_blinks;                    // number of predicted blinks
-
-        std::vector<float> predictions_[2];   // Current and past predictions to plot
 
         // Eye cropper
         ImageCropper* image_cropper_;

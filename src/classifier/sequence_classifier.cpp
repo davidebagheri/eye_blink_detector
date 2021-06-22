@@ -9,12 +9,14 @@ namespace eb_detector{
 
         // Initialize variables
         next_pos_ = 0;
+        input_ready_ = false;
         std::vector<int> lstm_input_shape = std::vector<int>({batch_size_, sequence_len_, feature_len_});
         seq_blob_ = cv::Mat(lstm_input_shape, CV_32F);
     }
 
     void SequenceClassifier::reset(){
         next_pos_ = 0;
+        input_ready_ = false;
     }
 
     void SequenceClassifier::insertToPosSequence(const cv::Mat& feat_vector, const int& id){
@@ -37,15 +39,21 @@ namespace eb_detector{
     }
 
     bool SequenceClassifier::addToSequence(const cv::Mat& feat_vector){
-        if (next_pos_ < sequence_len_-1){
+        if (input_ready_){
+            shiftSeqBackwards();
             insertToPosSequence(feat_vector, next_pos_);
-            next_pos_++;
-            return 0;
-        }
+            return true;
+        } else {
+            insertToPosSequence(feat_vector, next_pos_);
 
-        shiftSeqBackwards();
-        insertToPosSequence(feat_vector, next_pos_);
-        return 1;
+            if (next_pos_ == sequence_len_-1){
+                input_ready_ = true;
+            } else {
+                next_pos_++;
+            }
+
+            return input_ready_;
+        }
     }
 
 }

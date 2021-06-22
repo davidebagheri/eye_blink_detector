@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/davide/Desktop/blink_classifier/semantic_segmentation/seg_lstm_tot_sleep/seg_lstm.ckpt"
+all_model_checkpoint_paths: "/home/davide/Desktop/blink_classifier/semantic_segmentation/seg_lstm_tot_sleep/seg_lstm.ckpt"

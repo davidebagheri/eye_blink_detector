@@ -42,6 +42,7 @@ namespace eb_detector {
         FaceSelector* face_selector_;
 
         // Params
+        int pyr_down_;
         std::string face_selector_type_;
         bool verbose_;
     };

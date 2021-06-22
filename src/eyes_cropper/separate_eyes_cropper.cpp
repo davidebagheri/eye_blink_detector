@@ -33,15 +33,25 @@ namespace eb_detector{
             cv::Rect eye_ROI = cv::Rect(upper_left, bottom_right);
             eye_ROIs_.push_back(eye_ROI);
 
-            // Check validity
-            if (upper_left.x < 0 or upper_left.y < 0 or
+            // Validity Check: the rois must ne larger than some dimensions defined by parameters
+            if (min_cropped_img_height_ > 0 and min_cropped_img_width_ > 0){
+                if (eye_ROI.width < min_cropped_img_width_ or
+                        eye_ROI.height < min_cropped_img_height_){
+                    imgs_valid_ = false;
+                }
+            }
+
+            if (imgs_valid_) {
+                // Validity Check: the rois must be completely inside the image
+                if (upper_left.x < 0 or upper_left.y < 0 or
                     bottom_right.x > image.cols - 1 or bottom_right.y > image.rows - 1) {
-                imgs_valid_ = false;
-            } else {
-                // Crop
-                cv::Mat roi = image(eye_ROI);
-                roi.convertTo(roi, CV_32F);
-                imgs->push_back(roi);
+                    imgs_valid_ = false;
+                } else {
+                    // Crop
+                    cv::Mat roi = image(eye_ROI);
+                    roi.convertTo(roi, CV_32F);
+                    imgs->push_back(roi);
+                }
             }
         }
         return imgs_valid_;
@@ -63,9 +73,9 @@ namespace eb_detector{
     void SeparateEyesCropper::visualizeResults(cv::Mat* image){
         cv::Scalar color;
         if (imgs_valid_){
-            color = cv::Scalar (0, 0, 255);
+            color = cv::Scalar (0, 255, 0);
         } else {
-            color = cv::Scalar (0, 255, 255);
+            color = cv::Scalar (0, 0, 255);
         }
 
         for (const cv::Rect& eye_roi : eye_ROIs_) {

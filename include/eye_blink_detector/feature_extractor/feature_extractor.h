@@ -9,9 +9,11 @@
 namespace eb_detector {
     class FeatureExtractor {
     public:
-        FeatureExtractor(const YAML::Node& params){}
+        FeatureExtractor(const YAML::Node& params){};
 
         virtual cv::Mat forward(const std::vector<cv::Mat>& model_in) = 0;
+
+        virtual void visualizeResults(cv::Mat* image) = 0;
     };
 }
 

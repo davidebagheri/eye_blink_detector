@@ -28,6 +28,7 @@ namespace eb_detector{
         // Variables
         cv::Mat seq_blob_;
         int next_pos_;      // Position iin which the next feature vector must be added
+        bool input_ready_;
     };
 }
 #endif //EYE_BLINK_DETECTOR_SEQUENCE_CLASSIFIER_H

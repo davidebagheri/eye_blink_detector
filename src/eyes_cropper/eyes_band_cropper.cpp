@@ -21,7 +21,16 @@ namespace eb_detector{
         // Compute eyes ROI
         eyes_ROI_ = cv::Rect(face.eyes[0] - offset, face.eyes[1] + offset);
 
-        // Check validity
+        // Validity Check: rois must be larger than some dimensions defined by parameters
+        if (min_cropped_img_height_ > 0 and min_cropped_img_width_ > 0){
+            if (eyes_ROI_.width < min_cropped_img_width_ or
+            eyes_ROI_.height < min_cropped_img_height_){
+                imgs_valid_ = false;
+                return false;
+            }
+        }
+
+        // Validity check: rois must be completely inside the image
         if (eyes_ROI_.tl().x < 0 or eyes_ROI_.tl().y < 0 or
                 eyes_ROI_.br().x > image.cols - 1 or eyes_ROI_.br().y > image.rows - 1) {
             imgs_valid_ = false;
@@ -41,9 +50,9 @@ namespace eb_detector{
     void EyesBandCropper::visualizeResults(cv::Mat* image){
         cv::Scalar color;
         if (imgs_valid_){
-            color = cv::Scalar(0, 0, 255);
+            color = cv::Scalar(0, 255, 0);
         } else {
-            color = cv::Scalar(0, 255, 255);
+            color = cv::Scalar(0, 0, 255);
         }
         rectangle(*image, eyes_ROI_, color, 2);
     }

@@ -4,7 +4,6 @@ namespace eb_detector{
     SegmentationExtractor::SegmentationExtractor(const YAML::Node& params) : NNFeatureExtractor(params){
         getParam(params, "n_classes", n_classes_, 3);
         getParam(params, "class_to_return", class_to_return_, -1);
-        getParam(params, "visualize", visualize_,false);
 
         // Initialize some colors
         colors_ = {{255,0,0}, {0,255,0}, {0,0,255}, {255,255,0}, {0,255, 255}, {255, 0, 255}};
@@ -66,9 +65,7 @@ namespace eb_detector{
 
     cv::Mat SegmentationExtractor::forward(const std::vector<cv::Mat>& model_in) {
         // Clear previous result
-        if (visualize_) {
-            segmented_maps_.clear();
-        }
+        predictions_.clear();
 
         // Compute scores
         cv::Mat scores = NNFeatureExtractor::forward(model_in);
@@ -92,6 +89,7 @@ namespace eb_detector{
 
             // Argmax
             cv::Mat prediction = computeArgmax(batch_score);
+            predictions_.push_back(prediction);
 
             // Compute class areas pct
             std::vector<float> pcts = computeClassesAreas(prediction);
@@ -104,15 +102,26 @@ namespace eb_detector{
             } else {
                 classes_pct.at<float>(i, 0) = pcts[class_to_return_];
             }
-
-            // Visualize
-            if (visualize_){
-                segmented_maps_.push_back(getColoredSegmentationMap(prediction));
-                cv::imshow("eye " + std::to_string(i), segmented_maps_[i]);
-            }
         }
 
         return classes_pct;
     }
 
+    void SegmentationExtractor::visualizeResults(cv::Mat* image){
+        if (!predictions_.empty()) {
+            int gap = 5;        // Gap between images
+            int y_tl = 10;
+            int x_tl = image->cols - predictions_.size() * (predictions_[0].cols + gap);
+
+            for (auto &prediction : predictions_) {
+                cv::Mat segmented_map = getColoredSegmentationMap(prediction);
+                cv::Mat image_ref = *image;
+                cv::Mat destRoi = image_ref(cv::Rect(x_tl, y_tl, segmented_map.cols, segmented_map.rows));
+
+                segmented_map.copyTo(destRoi);
+
+                x_tl += predictions_[0].cols + gap;
+            }
+        }
+    }
 }

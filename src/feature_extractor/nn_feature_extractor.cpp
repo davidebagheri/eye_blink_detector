@@ -3,11 +3,12 @@
 namespace eb_detector {
     NNFeatureExtractor::NNFeatureExtractor(const YAML::Node &params) : FeatureExtractor(params) {
         // Params
-        getParam(params, "xml_path", xml_path_, std::string("../models/cnn/cnn_16_2.xml"));
-        getParam(params, "bin_path", bin_path_, std::string("../models/cnn/cnn_16_2.bin"));
-        getParam<int>(params, "dnn_backend", dnn_backend_, cv::dnn::DNN_BACKEND_INFERENCE_ENGINE);
-        getParam(params, "input_width", input_width_, 50);
-        getParam(params, "input_height", input_height_, 50);
+        getParam(params, "xml_path", xml_path_, std::string("../models/eye_unet/FP32/eye_unet_32.xml"));
+        getParam(params, "bin_path", bin_path_, std::string("../models/eye_unet/FP32/eye_unet_32.bin"));
+        getParam<int>(params, "dnn_backend", dnn_backend_, 0);
+        getParam<int>(params, "preferable_target", preferable_target_, 0);
+        getParam(params, "input_width", input_width_, 80);
+        getParam(params, "input_height", input_height_, 40);
         getParam(params, "input_scale_factor", scale_factor_, 1.0);
         getParam(params, "convert_to_gray", convert_to_gray_, false);
 

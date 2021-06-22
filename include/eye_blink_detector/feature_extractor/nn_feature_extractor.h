@@ -23,9 +23,9 @@ namespace eb_detector {
         bool convert_to_gray_;
 
         // Model
-        int dnn_backend_;
         cv::dnn::Net model_;
-
+        int preferable_target_;
+        int dnn_backend_;
     };
 }
 

@@ -5,13 +5,15 @@ namespace eb_detector{
     NNClassifier::NNClassifier(const YAML::Node& params) : SequenceClassifier(params){
         getParam(params, "xml_path", xml_path_, std::string("../models/seg_lstm/seg_lstm.xml"));
         getParam(params, "bin_path", bin_path_, std::string("../models/seg_lstm/seg_lstm.bin"));
-        getParam<int>(params, "dnn_backend", dnn_backend_, cv::dnn::DNN_BACKEND_INFERENCE_ENGINE);
+        getParam<int>(params, "dnn_backend", dnn_backend_, 0);
+        getParam<int>(params, "preferable_target", preferable_target_, 0);
         getParam<float>(params, "confidence_threshold", confidence_th_, 0.95);
         getParam(params, "blink_class_id", blink_class_id_, 0);
 
         // Load model
         model_ = cv::dnn::readNet(xml_path_, bin_path_);
         model_.setPreferableBackend(dnn_backend_);
+        model_.setPreferableTarget(preferable_target_);
 
         // Normalize the confidence threshold
         confidence_th_ /= 100;

@@ -21,6 +21,7 @@ namespace eb_detector {
         std::string xml_path_;
         std::string bin_path_;
         int dnn_backend_;
+        int preferable_target_;
 
         // Model
         cv::dnn::Net model_;

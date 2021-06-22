@@ -19,6 +19,7 @@ blink_classifier:
     type: segmentation_extractor
     xml_path: "../models/eye_unet/FP32/eye_unet_32.xml"
     bin_path: "../models/eye_unet/FP32/eye_unet_32.bin"
+    dnn_backend: 0    # 0 = DNN_BACKEND_DEFAULT, 1 = DNN_BACKEND_HALIDE, 2 = DNN_BACKEND_INFERENCE_ENGINE, 3 = DNN_BACKEND_OPENCV
     input_width: 80
     input_height: 40
     input_scale_factor: 0.00392156862745098    # it is 1/255
@@ -29,6 +30,7 @@ blink_classifier:
     type: nn_classifier
     xml_path: "../models/seg_lstm/FP32/seg_lstm.xml"
     bin_path: "../models/seg_lstm/FP32/seg_lstm.bin"
+    dnn_backend: 0    # 0 = DNN_BACKEND_DEFAULT, 1 = DNN_BACKEND_HALIDE, 2 = DNN_BACKEND_INFERENCE_ENGINE, 3 = DNN_BACKEND_OPENCV
     confidence_threshold: 95
     batch_size: 2
     sequence_length: 10

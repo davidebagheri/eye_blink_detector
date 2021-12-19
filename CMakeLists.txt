@@ -14,9 +14,9 @@ else()
 endif()
 
 # Set yaml-cpp paths
-if (EXISTS "${CMAKE_SOURCE_DIR}/yaml-cpp/build/libyaml-cpp.so")
-	set(yaml_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/yaml-cpp/include")
-	set(yaml_LIBS "${CMAKE_SOURCE_DIR}/yaml-cpp/build/libyaml-cpp.so")
+if (EXISTS "${CMAKE_SOURCE_DIR}/ThirdParty/yaml-cpp/build/libyaml-cpp.so")
+	set(yaml_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/ThirdParty/yaml-cpp/include")
+	set(yaml_LIBS "${CMAKE_SOURCE_DIR}/ThirdParty/yaml-cpp/build/libyaml-cpp.so")
 else()
 	message(FATAL_ERROR "You need to compile yaml-cpp first.")
 endif()
@@ -55,4 +55,4 @@ target_link_libraries(${PROJECT_NAME}
 
 # Eye Blink detection from a streaming camera
 add_executable(main main.cpp)
-target_link_libraries(main ${PROJECT_NAME})
+target_link_libraries(main ${yaml_LIBS} ${PROJECT_NAME})

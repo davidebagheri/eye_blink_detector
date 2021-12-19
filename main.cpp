@@ -4,7 +4,11 @@
 
 int main(int argc, char** argv) {
     // Params
-    std::string cfg_path = "../cfg/eb_detector.yaml";
+	if (argc != 2) {
+		std::cerr << "Usage: ./main path-to-config.yaml " << std::endl;
+		return -1;
+	}
+    std::string cfg_path = std::string(argv[1]);
     YAML::Node params = YAML::LoadFile(cfg_path);
 
     // Eye blink detector

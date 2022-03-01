@@ -37,22 +37,22 @@ The project is based on three main dependences:
   clone the libfacedetection repo and compile as shared lib
   
   ```
-  cd <path-to-eye_blink_detection-folder>
-  cd ThirdParty
-  git clone https://github.com/jbeder/yaml-cpp
-  cd yaml-cpp 
-  mkdir build && cd build
-  cmake -DYAML_BUILD_SHARED_LIBS=ON ..
-  make
+  - cd <path-to-eye_blink_detection-folder>
+  - cd ThirdParty
+  - git clone https://github.com/jbeder/yaml-cpp
+  - cd yaml-cpp 
+  - mkdir build && cd build
+  - cmake -DYAML_BUILD_SHARED_LIBS=ON ..
+  - make
   ```
   
 Once you have compiled the dependeces, the package can be compiled with:
 
  ```
- cd <path-to-eye_blink_detection-folder>
- mkdir build && cd build
- cmake ..
- make
+ - cd <path-to-eye_blink_detection-folder>
+ - mkdir build && cd build
+ - cmake ..
+ - make
  ```
  
 ## Example
